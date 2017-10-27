@@ -2,17 +2,9 @@
 /**
  * CT Recurrence Class
  *
- * This class gets future recurring dates based on given arguments. It also considers excluded dates.
- * It is used in the Church Content plugin (and Pro add-on) and Church Theme Framework.
+ * A class utilizing php-rrule to handle recurring event dates in the Church Content plugin and Church Theme Framework.
  *
- * Version 2.0 adopted the use of php-rrule (MIT): https://github.com/rlanvin/php-rrule.
- * Versions before that (0.9) used more simplistic, proprietary calculations.
- * get_dates(), calc_next_future_date() and their arguments are backwards-compatible.
- *
- * Be aware that version 2.0 requires PHP 5.3+ so you should prompt to update if necessary.
- * Earlier versions (0.9) were compatible with PHP 5.2.4, like WordPress itself.
- *
- * See example usage at bottom of this file.
+ * See README.md and example usage at bottom of this file for more details.
  *
  * @copyright Copyright (c) 2014 - 2017 churchthemes.com
  * @license   GPLv2 or later
