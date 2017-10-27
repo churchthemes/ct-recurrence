@@ -6,7 +6,9 @@
  *
  * See README.md and example usage at bottom of this file for more details.
  *
- * @copyright Copyright (c) 2014 - 2017 churchthemes.com
+ * @package   CT_Recurrence
+ * @copyright Copyright (c) 2014 - 2017, churchthemes.com
+ * @link      https://github.com/churchthemes/ct-recurrence
  * @license   GPLv2 or later
  */
 
