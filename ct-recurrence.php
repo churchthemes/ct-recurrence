@@ -51,7 +51,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 		public function __construct() {
 
 			// Version.
-			$this->version = '2.0';
+			$this->version = '2.0.1';
 
 			// Includes to load.
 			$includes = array(
