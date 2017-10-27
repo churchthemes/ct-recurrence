@@ -523,9 +523,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 
 				// Get multiple recurring dates.
 				if ( $rrule_args ) {
-echo '<pre>';
-print_r( $args );
-echo '</pre>';
+
 					// Start building RSet.
 					$rset = new RSet();
 					$rset->addRRule( $rrule_args );
