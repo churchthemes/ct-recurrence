@@ -504,12 +504,12 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 		 * @since 0.9
 		 * @access public
 		 * @param array $args Arguments determining recurrence.
-		 * @return array|bool Array of dates or false if arguments invalid.
+		 * @return array|bool Array of dates or empty array (false) if arguments invalid.
 		 */
 		public function get_dates( $args ) {
 
 			// Return false if no result.
-			$dates = false;
+			$dates = array(); // empty array is false but more compatible in case a theme or plugin expects array.
 
 			// Get prepared arguments.
 			$prepared_args = $this->prepare_args( $args );
