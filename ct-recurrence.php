@@ -158,7 +158,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 			// Start Date.
 			if ( $continue ) {
 
-				// Date is invalid.
+				// Date is missing or invalid.
 				if ( empty( $args['start_date'] ) || ! $this->validate_date( $args['start_date'] ) ) {
 					$continue = false;
 				}
@@ -182,13 +182,18 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 				// Value is provided.
 				if ( ! empty( $args['until_date'] ) ) {
 
-					// Date is invalid.
+					// Until Date is invalid.
 					if ( ! $this->validate_date( $args['until_date'] ) ) {
 						$continue = false;
 					}
 
+					// Until Date is earlier than start date.
+					if ( $continue && ( strtotime( $args['until_date'] ) < strtotime( $args['start_date'] ) ) ) {
+						$continue = false;
+					}
+
 					// Format for rrule.
-					else {
+					if ( $continue ) {
 						$rrule_args['UNTIL'] = $args['until_date'];
 					}
 
@@ -518,7 +523,9 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 
 				// Get multiple recurring dates.
 				if ( $rrule_args ) {
-
+echo '<pre>';
+print_r( $args );
+echo '</pre>';
 					// Start building RSet.
 					$rset = new RSet();
 					$rset->addRRule( $rrule_args );
@@ -657,7 +664,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
  *******************************************/
 
 // Uncomment or copy elsewhere then go to /wp-admin/?recurrence_test=1
-/*
+
 if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 
 	// Instantiate class first.
@@ -748,4 +755,4 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 	exit;
 
 }
-*/
+
