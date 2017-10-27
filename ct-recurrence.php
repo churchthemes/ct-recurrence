@@ -508,7 +508,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 		 */
 		public function get_dates( $args ) {
 
-			// Return false if no result.
+			// Return empty array / false if no result.
 			$dates = array(); // empty array is false but more compatible in case a theme or plugin expects array.
 
 			// Get prepared arguments.
