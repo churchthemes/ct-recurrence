@@ -51,7 +51,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 		public function __construct() {
 
 			// Version.
-			$this->version = '2.0.1';
+			$this->version = '2.0.2';
 
 			// Includes to load.
 			$includes = array(
@@ -66,7 +66,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 
 			// Load includes.
 			foreach ( $includes as $include ) {
-				require_once trailingslashit( CTC_PATH ) . CTC_LIB_DIR . '/ct-recurrence/php-rrule/' . $include;
+				require_once dirname( __FILE__ ) . '/php-rrule/' . $include;
 			}
 
 		}
