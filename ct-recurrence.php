@@ -53,7 +53,7 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 			// Version.
 			$this->version = '2.0.2';
 
-			// Includes to load.
+			// php-rrule includes to load.
 			$includes = array(
 
 				// php-rrule includes.
@@ -64,10 +64,43 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 
 			);
 
-			// Load includes.
+			// Load php-rrule includes.
 			foreach ( $includes as $include ) {
 				require_once dirname( __FILE__ ) . '/php-rrule/' . $include;
 			}
+
+		}
+
+		/**
+		 * Check if PHP version too old.
+		 *
+		 * php-rrule requires version 5.3 or newer.
+		 * This is used to stop php-rule from running, to prevent error.
+		 *
+		 * It can also be used by a plugin or theme to detect suitable PHP version
+		 * then show an admin notice, or to prevent use of get_events().
+		 *
+		 * @since 2.0
+		 * @access public
+		 * @return bool True if version is too old.
+		 */
+		public function php_is_old() {
+
+			// Assume it won't be old.
+			$php_is_old = false;
+
+			// Version in use.
+			$php_version_used = phpversion();
+
+			// Minimum required version.
+			$php_version_required = '5.3';
+
+			// PHP version is less than what's required.
+			if ( version_compare( $php_version_used, $php_version_required, '>=' ) ) {
+				$php_is_old = true;
+			}
+
+			return $php_is_old;
 
 		}
 
@@ -85,6 +118,12 @@ if ( ! class_exists( 'CT_Recurrence' ) ) {
 		 * @return array|bool $args['args'] and $args['rrule_args'] or false if invalid.
 		 */
 		public function prepare_args( $args ) {
+
+			// Run only if PHP version is sufficient.
+			// False arguments causes get_dates() to return empty array.
+			if ( ! $this->php_is_old() ) {
+				return false;
+			}
 
 			// Is it a non-empty array?
 			if ( empty( $args ) || ! is_array( $args ) ) { // could be empty array; set bool.
