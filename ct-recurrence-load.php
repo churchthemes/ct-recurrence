@@ -35,8 +35,21 @@ if ( ! class_exists( 'CT_Recurrence_Load' ) ) {
 		 */
 		public function __construct() {
 
+			// Set constants.
+			$this->set_constants();
+
 			// Load appropriate version of class depending on situation.
 			$this->load_class();
+
+		}
+
+		/**
+		 * Set constants.
+		 */
+		function set_constants() {
+
+			// PHP version required at minimum.
+			define( 'CTR_PHP_MIN_VERSION', '5.3' );
 
 		}
 
@@ -53,12 +66,6 @@ if ( ! class_exists( 'CT_Recurrence_Load' ) ) {
 
 			// Class may already be included by theme or another plugin.
 			if ( ! class_exists( 'CT_Recurrence' ) ) {
-
-				// PHP version in use.
-				$php_version_used = phpversion();
-
-				// PHP version required at minimum.
-				$php_version_required = '5.3';
 
 				// PHP version is sufficient.
 				if ( ! $this->php_is_old() ) {
@@ -91,7 +98,7 @@ if ( ! class_exists( 'CT_Recurrence_Load' ) ) {
 			$php_version_used = phpversion();
 
 			// PHP version required at minimum.
-			$php_version_required = '5.3';
+			$php_version_required = CTR_PHP_MIN_VERSION;
 
 			// PHP version is sufficient.
 			if ( version_compare( $php_version_used, $php_version_required, '>=' ) ) {

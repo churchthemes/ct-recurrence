@@ -42,6 +42,22 @@ class CT_Recurrence {
 	public $version;
 
 	/**
+	 * PHP is old
+	 *
+	 * @since 2.0
+	 * @var bool
+	 */
+	public $php_is_old;
+
+	/**
+	 * PHP minimum version required.
+	 *
+	 * @since 2.0
+	 * @var string
+	 */
+	public $php_min_version;
+
+	/**
 	 * Constructor
 	 *
 	 * @since 0.9
@@ -54,6 +70,11 @@ class CT_Recurrence {
 
 		// Load php-rrule.
 		$this->load_php_rrule();
+
+		// PHP version is okay, because ct-recurrence-load.php loaded ct-recurrence.php.
+		// Themes and plugins can check $ct_recurrence->php_is_old to determine if need to show a notice.
+		$this->php_is_old = false;
+		$this->php_min_version = CTR_PHP_MIN_VERSION;
 
 	}
 
