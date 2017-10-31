@@ -52,15 +52,29 @@ class CT_Recurrence {
 		// Version.
 		$this->version = '2.0.2';
 
+		// Load php-rrule.
+		$this->load_php_rrule();
+
+	}
+
+	/**
+	 * Load php-rrule
+	 *
+	 * Include php-rrule classes.
+	 *
+	 * @since 0.9
+	 * @access public
+	 * @param array $args Arguments for recurrence.
+	 * @return array|bool $args['args'] and $args['rrule_args'] or false if invalid.
+	 */
+	public function load_php_rrule() {
+
 		// php-rrule includes to load.
 		$includes = array(
-
-			// php-rrule includes.
 			'RfcParser.php',
 			'RRuleInterface.php',
 			'RSet.php',
 			'RRule.php',
-
 		);
 
 		// Load php-rrule includes.
