@@ -131,6 +131,7 @@ class CT_Recurrence {
 			'until_date',
 			'frequency',
 			'interval',
+			'weekly_type',
 			'weekly_day',
 			'monthly_type',
 			'monthly_week',
@@ -278,42 +279,43 @@ class CT_Recurrence {
 
 		}
 
-		// Monthly Type (required when frequency is monthly).
+		// Weekly Type (required when frequency is weekly).
 		if ( $continue ) {
 
 			// Value is required.
-			if ( 'monthly' === $args['frequency'] ) {
+			if ( 'weekly' === $args['frequency'] ) {
 
-				// Valid monthly types.
-				$valid_monthly_types = array(
-					'day',
-					'week'
+				// Valid weekly types.
+				$valid_weekly_types = array(
+					'same', // same day of week.
+					'day' // specific day(s) of week.
 				);
 
-				// Default to day if none.
-				if ( empty( $args['monthly_type'] ) ) {
-					$args['monthly_type'] = 'day';
+				// Default to 'same' if none.
+				// Helps with back-compat since weekly_type and weekly_day did not always exist.
+				if ( empty( $args['weekly_type'] ) ) {
+					$args['weekly_type'] = 'same';
 				}
 
 				// Value is invalid.
-				if ( ! in_array( $args['monthly_type'], $valid_monthly_types, true ) ) {
+				if ( ! in_array( $args['weekly_type'], $valid_weekly_types, true ) ) {
 					$continue = false; // value is invalid.
 				}
 
 			}
 
-			// Monthly type not required if frequency isn't monthly.
+			// Weekly type not required if frequency isn't weekly.
 			else {
-				$args['monthly_type'] = '';
+				$args['weekly_type'] = '';
 			}
 
 		}
 
-		// Weekly Day(s) (value when frequency is weekly).
+		// Weekly Day(s) (required when frequency is weekly and weekly_type is day).
 		if ( $continue ) {
 
-			// Value is required.
-			if ( 'weekly' === $args['frequency'] ) {
+			// Weekly type value is required.
+			if ( 'weekly' === $args['frequency'] && 'day' === $args['weekly_type'] ) {
 
 				// Weekly day valid values.
 				$weekly_day_valid_values = array(
@@ -326,9 +328,9 @@ class CT_Recurrence {
 					'SA',
 				);
 
-				// If value is string, cast to array.
-				if ( ! empty( $args['weekly_day'] ) && is_string( $args['weekly_day'] ) ) {
-					$args['weekly_day'] = (array) $args['weekly_day'];
+				// If value is single string, convert to array.
+				if ( ! empty( $args['weekly_day'] ) && in_array( $args['weekly_day'], $weekly_day_valid_values, true ) ) {
+					$args['weekly_day'] = (array) $args['weekly_day']; // convert single value to array.
 				}
 
 				// If value is empty, assume Start Date's day of week.
@@ -336,10 +338,15 @@ class CT_Recurrence {
 					$args['weekly_day'] = array( $start_date_day_of_week_abbrev );
 				}
 
-				// Have weekly day value.
-				if ( ! empty( $args['weekly_day'] ) ) {
+				// Weekly day value is invalid.
+				if ( empty( $args['weekly_day'] ) ) {
+					$continue = false; // value is invalid.
+				}
 
-					// Not an array, invalid.
+				// Weekly day value is valid, continue...
+				else {
+
+					// Not an array.
 					if ( ! is_array( $args['weekly_day'] ) ) {
 						$continue = false; // value is invalid.
 					}
@@ -347,8 +354,10 @@ class CT_Recurrence {
 					// Is an array.
 					else {
 
-						// Loop 2-letter day of week code(s).
+						// Array to collect weekly day values for rrule.
 						$weekly_day_rrule = array();
+
+						// Loop 2-letter day of week code(s).
 						foreach ( $args['weekly_day'] as $weekly_day_value ) {
 
 							// Day of week code is invalid.
@@ -380,9 +389,40 @@ class CT_Recurrence {
 
 			}
 
-			// Weekly day not needed when frequency not weekly.
+			// Monthly week not required in this case.
 			else {
 				$args['weekly_day'] = '';
+			}
+
+		}
+
+		// Monthly Type (required when frequency is monthly).
+		if ( $continue ) {
+
+			// Value is required.
+			if ( 'monthly' === $args['frequency'] ) {
+
+				// Valid monthly types.
+				$valid_monthly_types = array(
+					'day',
+					'week'
+				);
+
+				// Default to day if none.
+				if ( empty( $args['monthly_type'] ) ) {
+					$args['monthly_type'] = 'day';
+				}
+
+				// Value is invalid.
+				if ( ! in_array( $args['monthly_type'], $valid_monthly_types, true ) ) {
+					$continue = false; // value is invalid.
+				}
+
+			}
+
+			// Monthly type not required if frequency isn't monthly.
+			else {
+				$args['monthly_type'] = '';
 			}
 
 		}
@@ -694,7 +734,7 @@ class CT_Recurrence {
  *******************************************/
 
 // Uncomment or copy elsewhere then go to /wp-admin/?recurrence_test=1
-/*
+
 if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 
 	// Instantiate class first.
@@ -704,9 +744,10 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 	// Note: until_date does not have effect on calc_next_future_date, only get_dates().
 	$args = array(
 		'start_date'     => '2017-10-01', // first day of event, YYYY-mm-dd (ie. 2015-07-20 for July 15, 2015).
-		'until_date'     => '2017-11-01', // date recurrence should not extend beyond (has no effect on calc_next_future_date method).
-		'frequency'      => 'monthly', // weekly, monthly, yearly.
+		'until_date'     => '2017-12-31', // date recurrence should not extend beyond (has no effect on calc_next_future_date method).
+		'frequency'      => 'weekly', // weekly, monthly, yearly.
 		'interval'       => '1', // every X weeks, months or years.
+		'weekly_type'   => 'day', // 'same' (same day of week) or 'day' (on specific days(s)); if recurrence is weekly ('same' is default).
 		'weekly_day'     => array( // single value, array or JSON-encoded array of day of week in 2-letter format (SU, MO, TU, etc.). If empty, uses same day of week.
 								//'SU',
 								//'MO',
@@ -716,7 +757,7 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 								//'FR',
 								//'SA',
 							),
-		'monthly_type'   => 'day', // day (same day of month) or week (on specific week(s)); if recurrence is monthly (day is default).
+		'monthly_type'   => 'week', // 'day' (same day of month) or 'week' (on specific week(s)); if recurrence is monthly ('day' is default).
 		'monthly_week'   => array( // single value, array or JSON-encoded array of numeric week(s) of month (or 'last') (e.g. 1, 2, 3, 4, 5 or last).
 								//'1',
 								//'2',
@@ -786,4 +827,3 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 	exit;
 
 }
-*/
