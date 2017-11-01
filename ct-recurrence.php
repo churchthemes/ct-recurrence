@@ -694,7 +694,7 @@ class CT_Recurrence {
  *******************************************/
 
 // Uncomment or copy elsewhere then go to /wp-admin/?recurrence_test=1
-
+/*
 if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 
 	// Instantiate class first.
@@ -704,12 +704,12 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 	// Note: until_date does not have effect on calc_next_future_date, only get_dates().
 	$args = array(
 		'start_date'     => '2017-10-01', // first day of event, YYYY-mm-dd (ie. 2015-07-20 for July 15, 2015).
-		'until_date'     => '2018-05-31', // date recurrence should not extend beyond (has no effect on calc_next_future_date method).
+		'until_date'     => '', // date recurrence should not extend beyond (has no effect on calc_next_future_date method).
 		'frequency'      => 'monthly', // weekly, monthly, yearly.
 		'interval'       => '1', // every X weeks, months or years.
 		'weekly_day'     => array( // single value, array or JSON-encoded array of day of week in 2-letter format (SU, MO, TU, etc.). If empty, uses same day of week.
 								//'SU',
-								'MO',
+								//'MO',
 								//'TU',
 								//'WE',
 								//'TH',
@@ -719,35 +719,24 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 		'monthly_type'   => 'week', // day (same day of month) or week (on specific week(s)); if recurrence is monthly (day is default).
 		'monthly_week'   => array( // single value, array or JSON-encoded array of numeric week(s) of month (or 'last') (e.g. 1, 2, 3, 4, 5 or last).
 								'1',
-								//'2',
+								'2',
 								//'3',
 								//'4',
-								'5',
+								//'5',
 								//'last',
 							),
 		'excluded_dates' => array(
 								//'2017-10-01',
-								//'2017-11-05',
+								//'2019-09-04',
+								'2019-03-04'
 								),
-		'limit'          => '30', // maximum dates to return (if no until_date, default is 1000 to prevent infinite loop).
+		'limit'          => '', // maximum dates to return (if no until_date, default is 1000 to prevent infinite loop).
 	);
 
 	// Get prepared args for display purposes only (get_dates() and calc_next_future_date() do this on their own).
 	$prepared_args = $ct_recurrence->prepare_args( $args );
 
 	?>
-
-	<h4>$args passed in</h4>
-
-	<?php echo '<pre>' . print_r( $args, true ) . '</pre>'; ?>
-
-	<h4>$args prepared</h4>
-
-	<?php echo '<pre>' . print_r( $prepared_args['args'], true ) . '</pre>'; ?>
-
-	<h4>$rrule_args</h4>
-
-	<?php echo '<pre>' . print_r( $prepared_args['rrule_args'], true ) . '</pre>'; ?>
 
 	<h4>get_dates()</h4>
 
@@ -780,8 +769,21 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 
 	?>
 
+	<h4>$args passed in</h4>
+
+	<?php echo '<pre>' . print_r( $args, true ) . '</pre>'; ?>
+
+	<h4>$args prepared</h4>
+
+	<?php echo '<pre>' . print_r( $prepared_args['args'], true ) . '</pre>'; ?>
+
+	<h4>$rrule_args</h4>
+
+	<?php echo '<pre>' . print_r( $prepared_args['rrule_args'], true ) . '</pre>'; ?>
+
 	<?php
 
 	exit;
 
 }
+*/
