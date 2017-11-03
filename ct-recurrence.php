@@ -734,7 +734,7 @@ class CT_Recurrence {
  *******************************************/
 
 // Uncomment or copy elsewhere then go to /wp-admin/?recurrence_test=1
-
+/*
 if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 
 	// Instantiate class first.
@@ -769,7 +769,6 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 		'excluded_dates' => array(
 								//'2017-10-01',
 								//'2019-09-04',
-								'2019-03-04'
 								),
 		'limit'          => '', // maximum dates to return (if no until_date, default is 1000 to prevent infinite loop).
 	);
@@ -827,3 +826,4 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 	exit;
 
 }
+*/
