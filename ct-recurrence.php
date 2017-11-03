@@ -66,7 +66,7 @@ class CT_Recurrence {
 	public function __construct() {
 
 		// Version.
-		$this->version = '2.0.3';
+		$this->version = '2.0.4';
 
 		// Load php-rrule.
 		$this->load_php_rrule();
