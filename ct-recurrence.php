@@ -770,7 +770,7 @@ if ( is_admin() && ! empty( $_GET['recurrence_test' ] ) ) {
 								//'2017-10-01',
 								//'2019-09-04',
 								),
-		'limit'          => '', // maximum dates to return (if no until_date, default is 1000 to prevent infinite loop).
+		'limit'          => '', // maximum dates to return (if no until_date, default is 100 to prevent infinite loop).
 	);
 
 	// Get prepared args for display purposes only (get_dates() and calc_next_future_date() do this on their own).
