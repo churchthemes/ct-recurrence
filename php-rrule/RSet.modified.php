@@ -1,6 +1,9 @@
 <?php
 
 /**
+ * MODIFIED BY CHURCHTHEMES
+ * - Made compatible with PHP 8.3 without losing compatibility with PHP 7.x
+ *
  * Licensed under the MIT license.
  *
  * For the full copyright and license information, please view the LICENSE file.
@@ -465,7 +468,8 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function current(): mixed
+	#[\ReturnTypeWillChange]
+	public function current()
 	{
 		return $this->current;
 	}
@@ -473,7 +477,8 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function key(): mixed
+	#[\ReturnTypeWillChange]
+	public function key()
 	{
 		return $this->key;
 	}
@@ -509,7 +514,8 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function offsetGet($offset): mixed
+	#[\ReturnTypeWillChange]
+	public function offsetGet($offset)
 	{
 		if ( ! is_numeric($offset) || $offset < 0 || is_float($offset) ) {
 			throw new \InvalidArgumentException('Illegal offset type: '.gettype($offset));

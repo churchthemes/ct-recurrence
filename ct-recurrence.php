@@ -9,7 +9,7 @@
  * See README.md and example usage at bottom of this file for more details.
  *
  * @package   CT_Recurrence
- * @copyright Copyright (c) 2014 - 2017, churchthemes.com
+ * @copyright Copyright (c) 2014 - 2023, churchthemes.com
  * @link      https://github.com/churchthemes/ct-recurrence
  * @license   GPLv2 or later
  */
@@ -66,7 +66,7 @@ class CT_Recurrence {
 	public function __construct() {
 
 		// Version.
-		$this->version = '2.0.4';
+		$this->version = '2.0.5';
 
 		// Load php-rrule.
 		$this->load_php_rrule();
@@ -94,8 +94,8 @@ class CT_Recurrence {
 		$includes = array(
 			'RfcParser.php',
 			'RRuleInterface.php',
-			'RSet.php',
-			'RRule.php',
+			'RSet.modified.php',
+			'RRule.modified.php',
 		);
 
 		// Load php-rrule includes.
